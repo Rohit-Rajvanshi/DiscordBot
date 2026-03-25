@@ -8,6 +8,7 @@ import variables
 import requests
 from PIL import Image
 from io import BytesIO
+import random 
 
 load_dotenv()
 
@@ -308,5 +309,9 @@ async def setnick(ctx , member: discord.Member , *nickname):
     await ctx.reply(embed = embed)
 
 
-
+@Skoll.command()
+async def cflip(ctx):
+    coin_possibilities = ["Heads" , "Tails"]
+    output = random.choice(coin_possibilities)
+    await ctx.reply(f"**The coin flipped and it landed on {output}**")
 Skoll.run(TOKEN)

@@ -9,8 +9,8 @@ Features:
 4) *Converting jpg/png to gif 
 5) A custom game
 6) AI web search / replies
-7) Set NickName 
-8) Flip Coin 
+7) * Set NickName 
+8) * Flip Coin 
 9) Lock 
 10) MemberCount 
 11) Polls 
