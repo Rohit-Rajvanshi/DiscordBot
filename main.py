@@ -47,6 +47,10 @@ async def on_message(message):
 
     await Skoll.process_commands(message);
 
+@Skoll.event
+async def on_member_join(member):
+    await member.send(f"Hey {member.name} welcome to the server")
+
 def to_upper(argument):
     return argument.upper()
 
@@ -55,10 +59,6 @@ def to_upper(argument):
 async def capitalize(ctx , * , content : to_upper):
     await ctx.reply(content)
 
-@Skoll.command()
-async def add(ctx , arg1 : int  ,arg2 : int):
-    sum = arg1 + arg2
-    await ctx.reply(sum)
 
 @Skoll.command()
 async def av(ctx , member : discord.Member = None):
@@ -314,4 +314,121 @@ async def cflip(ctx):
     coin_possibilities = ["Heads" , "Tails"]
     output = random.choice(coin_possibilities)
     await ctx.reply(f"**The coin flipped and it landed on {output}**")
+
+
+@Skoll.command()
+async def count(ctx):
+    guild = ctx.guild
+    count = len(ctx.guild.members)
+    embed = discord.Embed(
+        title = "Member Count",
+        description = f"{count}",
+        color = discord.Color.blue()
+    )
+    await ctx.reply(embed = embed)
+
+@Skoll.command()
+@commands.has_permissions(administrator=True)
+async def lock(ctx):
+    channel = ctx.channel
+    role = ctx.guild.default_role
+    overwrite = channel.overwrites_for(role)
+    overwrite.send_messages = False
+
+    await ctx.channel.set_permissions(role , overwrite=overwrite)
+
+    await ctx.send("**🔒 Channel locked.**")
+
+
+@lock.error
+async def lock_error(ctx , error):
+    if isinstance(error , commands.MissingPermissions):
+        embed = discord.Embed(
+            title = "Missing Permissions",
+            description = "BUDDY BUDDY 😂😂😂",
+            color = discord.Color.yellow(),
+        )
+        await ctx.reply(embed = embed)
+
+@Skoll.command()
+@commands.has_permissions(administrator=True)
+async def unlock(ctx):
+    channel = ctx.channel
+    role = ctx.guild.default_role
+    overwrite = channel.overwrites_for(role)
+    overwrite.send_messages = True
+
+    await ctx.channel.set_permissions(role , overwrite=overwrite)
+
+    await ctx.send("**🔓 Channel unlocked.**")
+
+@unlock.error
+async def unlock_error(ctx , error):
+    if isinstance(error , commands.MissingPermissions):
+        embed = discord.Embed(
+            title = "Missing Permissions",
+            description = "BUDDY BUDDY 😂😂😂",
+            color = discord.Color.yellow(),
+        )
+        await ctx.reply(embed = embed)
+
+  
+@Skoll.command()
+async def poll(ctx , * , question):
+    embed = discord.Embed(title ="New Poll" , description = question , color = discord.Color.blue())
+    poll_message = await ctx.send(embed = embed)
+    await poll_message.add_reaction("👍")
+    await poll_message.add_reaction("👎")
+
+@Skoll.command()
+@commands.has_permissions(manage_messages=True)
+async def purge(ctx , number : int):
+    channel = ctx.channel
+    await channel.purge(limit = number)
+
+    embed = discord.Embed(description = f"Successfuly purged {number} messages")
+    await ctx.send(embed = embed)
+
+
+@purge.error
+async def purge_error(ctx , error):
+    if isinstance(error , commands.MissingPermissions):
+        embed = discord.Embed(
+            title = "Missing Permissions",
+            description = "BUDDY BUDDY 😂😂😂",
+            color = discord.Color.yellow(),
+        )
+        await ctx.reply(embed = embed)
+
+
+
+@Skoll.command()
+async def add(ctx , arg1 : int  ,arg2 : int):
+    sum = arg1 + arg2
+    await ctx.reply(sum)
+
+@Skoll.command()
+async def sub(ctx , arg1 :int , arg2 :int ):
+    result = arg1 - arg2
+    await ctx.reply(result)
+
+@Skoll.command()
+async def multiply(ctx , arg1 : int  ,arg2 : int):
+    product = arg1 * arg2
+    await ctx.reply(product)
+
+
+@Skoll.command()
+async def divide(ctx , arg1 : int  ,arg2 : int):
+    result = arg1 / arg2
+    await ctx.reply(result)
+
+@Skoll.command()
+async def power(ctx , arg1 : int  ,arg2 : int):
+    result = arg1 ** arg2
+    await ctx.reply(result)
+
+
+
+
 Skoll.run(TOKEN)
