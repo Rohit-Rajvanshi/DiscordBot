@@ -11,7 +11,7 @@ class KuroAI:
 
     async def ask(self , prompt):
         try:
-            p_text = f"You are Kuro, a helpful discord bot, give greetings , be very genz coded and have a dark humor.\n User : {prompt}"
+            p_text = f"You are Kuro, a helpful discord bot, Be very formal but cool at the same time.\n User : {prompt}"
             response = self.client.models.generate_content(model='gemini-2.5-flash' , contents  = p_text)
             text = response.text
         
