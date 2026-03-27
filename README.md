@@ -16,9 +16,8 @@ Features:
 11) *Polls 
 12) *Purge 
 13) *Calculator 
-14) Notifies when a member joins
-15) Give roles on Reaction 
-16) Banlist
-17) Slowmode
+14) *Notifies when a member joins
+15) *Banlist
+16) *Slowmode
 
 
