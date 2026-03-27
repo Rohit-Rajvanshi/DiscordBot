@@ -23,9 +23,10 @@ async def on_ready():
     assert Skoll.user is not None
     print (f"Logged in as {Skoll.user} (ID : {Skoll.user.id})")
     print("---------------------------------------------------")
-    guild = discord.Object(id = 1104576336690937928)
+    guild = discord.Object(id=1104576336690937928)
     await Skoll.tree.sync(guild=guild)
-    print("CLEARED + SYNCED")
+    print("Guild synced")
+
 async def main():
     async with Skoll:
         await Skoll.load_extension("commands.moderation")
